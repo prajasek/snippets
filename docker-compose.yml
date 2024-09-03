@@ -1,0 +1,7 @@
+services:
+  cs6200-gios:
+    image: gtomscs6200/fall24-environment:latest # note: set appropriately to current semester (see https://hub.docker.com/u/gtomscs6200)
+    container_name: learn-C
+    tty: true
+    volumes:
+      - .:/home/learnC:rw
