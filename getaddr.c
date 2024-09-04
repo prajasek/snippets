@@ -1,30 +1,23 @@
 #include <netdb.h>       // getaddrinfo
 #include <arpa/inet.h>   // inet_pton
 #include <sys/socket.h>  // socket
-#include <sys/types.h>
+#include <sys/types.h>   // size_t
 #include <stdio.h>       // printf
 #include <string.h>      // strcpy
 #include <stdint.h>      // uint32_t
 #include <stdlib.h> 
 
 
-#define BUFFER_SIZE 500
-
-int main(int argc, char* argv[]) 
+struct addrinfo* getaddr(char* argv) 
 {
     struct addrinfo             hints; 
     struct addrinfo             *result, *rp; 
     struct sockaddr_storage     peer_addr; 
-    char* input_address = argv[1];
+    char* input_address = argv;
     char ipstr[INET6_ADDRSTRLEN];
 
     
-    
-    if (argc<2) {
-        fprintf(stderr, "usage: showip hostname. \n");
-        exit(1);
-    }
-    printf("IP address entered: %s\n", input_address);
+    printf("IP address entered: %s\n\n", input_address);
 
     memset(&hints, 0, sizeof hints);
     
@@ -56,7 +49,7 @@ int main(int argc, char* argv[])
             ipver = "ipv6";
         }
         inet_ntop(rp->ai_family, addr, ipstr, sizeof ipstr);
-        printf("%s: %s\n\n", ipver, ipstr);
+        printf("%s: %s :%s\n\n", ipver, ipstr, rp->ai_canonname);
 
         // printf("%d, %d, %d, %s\n", rp->ai_family, 
         //                 rp->ai_socktype, rp->ai_protocol, rp->ai_canonname);
@@ -64,10 +57,7 @@ int main(int argc, char* argv[])
 
 
     freeaddrinfo(result);
-
-
-
-
+    return result;
 /* inet_ntop - binary to string IP translation (opposite of inet_pton)
     char ip4[INET_ADDRSTRLEN];  // INET6_ADDRSTRLEN for ip6
     struct sockaddr_in sa; 

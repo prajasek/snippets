@@ -1,3 +1,4 @@
 #!/bin/sh
 clear
-gcc main.c -o socket && ./socket 
+gcc -o main main.c getaddr.c
+./main $1
