@@ -42,7 +42,7 @@ struct addrinfo* getaddr(char* argv)
             struct sockaddr_in* ip4 = (struct sockaddr_in*)rp->ai_addr;
             addr = &(ip4->sin_addr);
             ipver = "ipv4";
-        } else {
+        } else {  // AF_INET6
             printf("AF_INET6 Length: %u \n", rp->ai_addrlen);
             struct sockaddr_in6* ip6 = (struct sockaddr_in6*)rp->ai_addr;
             addr = &(ip6->sin6_addr);

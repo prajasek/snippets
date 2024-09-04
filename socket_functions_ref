@@ -9,15 +9,15 @@
 /*
 int getaddrinfo(node, service/port, struct addrinfo* hints, 
                                     struct addrinfo** result_linkedlist);
-
 - node - hostname or IP
 - service - port number, service name like http, ftp (found in /etc/services)
 - hints - filled out to hint whats needed
 - result_linkedlist - linked list of all addresses
 
 
-
-
-
+int socket(int domain, int type, int protocol);
+- domain - AF_UNIX, AF_INET, AF_INET6
+- type   - SOCK_STREAM, SOCK_DGRAM 
+- protocol - SCTP, etc. --- always 0
 
 */
