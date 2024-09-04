@@ -38,6 +38,17 @@ struct sockaddr_storage {            // can store both Ipv4 and Ipv6 - with padd
     .. some padding; 
 }  
 
+struct addrinfo {
+    int ai_flags;                   // Input flags (AI_* constants) 
+    int ai_family;                  // Address family 
+    int ai_socktype;                // Type: SOCK_STREAM, SOCK_DGRAM 
+    int ai_protocol;                // Socket protocol 
+    size_t ai_addrlen;              // Size of structure pointed to by ai_addr 
+    char *ai_canonname;             // Canonical name of host 
+    struct sockaddr *ai_addr;       // Pointer to socket address structure 
+    struct addrinfo *ai_next;       // Next structure in linked list 
+}
+
 Byte Ordering
 ---------------
 Networks use big-endian, host may use any. So we need to convert 

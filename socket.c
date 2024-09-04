@@ -1,14 +1,19 @@
+#include <netdb.h>
 #include <arpa/inet.h>   // inet_pton
 #include <sys/socket.h>  // socket
+#include <sys/types.h>
 #include <stdio.h>       // printf
 #include <string.h>      // strcpy
 #include <stdint.h>      // uint32_t
 #include <stdlib.h> 
 
+#define BUFFER_SIZE 500
+
 int main(int argc, char argv[]) 
 {
-
-
+    struct addrinfo hints; 
+    struct addrinfo *result, *rp; 
+    printf("Suucess");
 
 /* inet_ntop - binary to string IP translation (opposite of inet_pton)
     char ip4[INET_ADDRSTRLEN];  // INET6_ADDRSTRLEN for ip6
