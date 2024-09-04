@@ -11,9 +11,19 @@
 
 int main(int argc, char argv[]) 
 {
-    struct addrinfo hints; 
-    struct addrinfo *result, *rp; 
-    printf("Suucess");
+    struct addrinfo             hints; 
+    struct addrinfo             *result, *rp; 
+    struct sockaddr_storage     peer_addr; 
+
+    memset(&hints, 0, sizeof(hints));
+    
+    
+
+
+
+
+
+
 
 /* inet_ntop - binary to string IP translation (opposite of inet_pton)
     char ip4[INET_ADDRSTRLEN];  // INET6_ADDRSTRLEN for ip6
