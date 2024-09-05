@@ -1,27 +1,44 @@
 #include <sys/types.h> //size_t
 #include <sys/socket.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <netdb.h>
 #include "getaddr.h"
 
 
 int main(int argc, char* argv[]){
-    char* value = argv[1];
-    printf("input: %s", value);
-    int server_or_client = 0; //AI_PASSIVE - server;  0 - client
-    struct addrinfo* result = getaddr(argv[1], server_or_client);
-    int sock; 
+    char* ADDRESS = argv[1];
+    char* PORT = argv[2];
 
-    sock = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
-    printf("socket fd: %d\n", sock);
-    if (argc < 2 && server_or_client == AI_PASSIVE) {
-        bind(sock, result->ai_addr, result->ai_addrlen);
+    if (argc < 2) {
+        ADDRESS = NULL; 
     }
 
-    printf("%d" , in6addr_any.s6_addr[0]);
-
     
-    /* OLD WAY OF PACKING SOCKADDR_IN FOR BINDING. USE getaddrinfo()
+    printf("Address Input: %s\n", ADDRESS);
+    printf("Port/Service input: %s\n", PORT);
+
+    int server_or_client = 0; //AI_PASSIVE - server;  0 - client
+    struct addrinfo* result = getaddr(ADDRESS, PORT, server_or_client);
+    int sockfd; 
+
+    // result is the head of a linked list. 
+    // but we are just connecting to the first result. 
+    sockfd = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+    int err = connect(sockfd, result->ai_addr, result->ai_addrlen );
+
+    if (err!=0) {
+        fprintf(stderr, "Failed connecting. \nExiting..\n\n");
+        exit(1);
+    }
+
+
+
+    freeaddrinfo(result);
+    
+}
+
+/* OLD WAY OF PACKING SOCKADDR_IN FOR BINDING. USE getaddrinfo()
     struct sockaddr_in my_addr; 
     sock = socket(AF_INET, SOCK_STREAM, 0);
     my_addr.sin_family = AF_INET;
@@ -30,7 +47,4 @@ int main(int argc, char* argv[]){
     memset(my_addr.sin_zero, '\0', sizeof my_addr.sin_zero);
     
     bind(sock, (struct sockaddr*)&my_addr, sizeof my_addr);
-    */
-
-    freeaddrinfo(result);
-}
+*/

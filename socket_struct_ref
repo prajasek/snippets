@@ -6,7 +6,7 @@
 /*
 struct sockaddr {                   // Common address structure to be cast into
     unsigned short   sa_family; 2
-    char            sa_data[14];    // address+port - not enough for IPv6 (16 bytes)
+    char             sa_data[14];   // address+port - not enough for IPv6 (16 bytes)
                                     // the number 14 is variable based on sa_family
 }  
 

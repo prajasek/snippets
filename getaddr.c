@@ -17,11 +17,10 @@ struct addrinfo* getaddr(char* address, char* port, int ai_flags)
     char* input_address = NULL;
     if (address) 
     {
-        char* input_address = address;
+        input_address = address;
     }
 
-    
-    printf("IP address entered: %s\n\n", input_address);
+    printf("Getting addrinfo for : %s\n\n", input_address);
 
     memset(&hints, 0, sizeof hints);
     
@@ -30,34 +29,35 @@ struct addrinfo* getaddr(char* address, char* port, int ai_flags)
     hints.ai_flags = ai_flags; 
     hints.ai_protocol = 0; 
 
-
     int status = getaddrinfo(input_address, port, &hints, &result);
     if (status!=0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
         exit(1);
     }
     
-
     for (rp=result; rp!=NULL; rp = rp->ai_next) {
         void* addr; 
         char* ipver;
+        unsigned short port4=0, port6=0; 
         struct sockaddr_in *ip4;
         struct sockaddr_in6* ip6;
         if (rp->ai_family == AF_INET) {
             printf("AFNET Length: %u\n", rp->ai_addrlen);
             ip4 = (struct sockaddr_in*)rp->ai_addr;
+            port4 =  ((struct sockaddr_in*)rp->ai_addr)->sin_port;
             addr = &(ip4->sin_addr);
             ipver = "ipv4";
         } else {  // AF_INET6
             printf("AF_INET6 Length: %u \n", rp->ai_addrlen);
             ip6 = (struct sockaddr_in6*)rp->ai_addr;
+            port6 =  ((struct sockaddr_in6*)rp->ai_addr)->sin6_port;
             addr = &(ip6->sin6_addr);
             ipver = "ipv6";
         }
 
         inet_ntop(rp->ai_family, addr, ipstr, sizeof ipstr);
-        printf("%s: %s :%s\n\n", ipver, ipstr, rp->ai_canonname );
-
+        printf("Ip Version: %s\nIP: %s \nCanon Name: %s\n", ipver, ipstr, rp->ai_canonname );
+        printf("Port: %hu %hu \n\n", ntohs(port4), ntohs(port6));
     }
 
     return result;
