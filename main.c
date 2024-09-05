@@ -11,7 +11,9 @@ int main(int argc, char* argv[]){
     struct addrinfo* result = getaddr(argv[1]);
     int sock; 
 
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-    printf ("socket fd: %d", sock);
+    sock = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+    printf ("socket fd: %d\n", sock);
 
+
+    freeaddrinfo(result);
 }

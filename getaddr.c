@@ -13,8 +13,12 @@ struct addrinfo* getaddr(char* argv)
     struct addrinfo             hints; 
     struct addrinfo             *result, *rp; 
     struct sockaddr_storage     peer_addr; 
-    char* input_address = argv;
     char ipstr[INET6_ADDRSTRLEN];
+    char* input_address = NULL;
+    if (argv) 
+    {
+        char* input_address = argv;
+    }
 
     
     printf("IP address entered: %s\n\n", input_address);
@@ -23,11 +27,11 @@ struct addrinfo* getaddr(char* argv)
     
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM; 
-    hints.ai_flags = AI_CANONNAME; 
+    hints.ai_flags = AI_PASSIVE; 
     hints.ai_protocol = 0; 
 
 
-    int status = getaddrinfo(input_address, "80", &hints, &result);
+    int status = getaddrinfo(input_address, "8080", &hints, &result);
     if (status!=0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
         exit(1);
@@ -37,26 +41,25 @@ struct addrinfo* getaddr(char* argv)
     for (rp=result; rp!=NULL; rp = rp->ai_next) {
         void* addr; 
         char* ipver;
+        struct sockaddr_in *ip4;
+        struct sockaddr_in6* ip6;
         if (rp->ai_family == AF_INET) {
             printf("AFNET Length: %u\n", rp->ai_addrlen);
-            struct sockaddr_in* ip4 = (struct sockaddr_in*)rp->ai_addr;
+            ip4 = (struct sockaddr_in*)rp->ai_addr;
             addr = &(ip4->sin_addr);
             ipver = "ipv4";
         } else {  // AF_INET6
             printf("AF_INET6 Length: %u \n", rp->ai_addrlen);
-            struct sockaddr_in6* ip6 = (struct sockaddr_in6*)rp->ai_addr;
+            ip6 = (struct sockaddr_in6*)rp->ai_addr;
             addr = &(ip6->sin6_addr);
             ipver = "ipv6";
         }
-        inet_ntop(rp->ai_family, addr, ipstr, sizeof ipstr);
-        printf("%s: %s :%s\n\n", ipver, ipstr, rp->ai_canonname);
 
-        // printf("%d, %d, %d, %s\n", rp->ai_family, 
-        //                 rp->ai_socktype, rp->ai_protocol, rp->ai_canonname);
+        inet_ntop(rp->ai_family, addr, ipstr, sizeof ipstr);
+        printf("%s: %s :%s %u\n\n", ipver, ipstr, rp->ai_canonname, ntohs(ip4->sin_port));
+
     }
 
-
-    freeaddrinfo(result);
     return result;
 /* inet_ntop - binary to string IP translation (opposite of inet_pton)
     char ip4[INET_ADDRSTRLEN];  // INET6_ADDRSTRLEN for ip6
