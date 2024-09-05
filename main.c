@@ -6,6 +6,12 @@
 
 
 int main(int argc, char* argv[]){
+    char* value = argv[1];
+    printf("input: %s", value);
     struct addrinfo* result = getaddr(argv[1]);
-    printf("Address of first entry: %s\n", result->ai_canonname);
+    int sock; 
+
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    printf ("socket fd: %d", sock);
+
 }
