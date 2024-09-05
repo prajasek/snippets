@@ -1,4 +1,3 @@
 #!/bin/sh
-clear
 gcc -o main main.c getaddr.c
 ./main $1

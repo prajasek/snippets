@@ -12,6 +12,14 @@
             "cwd": "${workspaceFolder}"
         },
         {
+            "name": "Learn C no args",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/main",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
             "name": "C/C++: gcc build and debug active file",
             "type": "cppdbg",
             "request": "launch",

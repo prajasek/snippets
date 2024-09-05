@@ -20,4 +20,6 @@ int socket(int domain, int type, int protocol);
 - type   - SOCK_STREAM, SOCK_DGRAM 
 - protocol - SCTP, etc. --- always 0
 
+int bind(int sockfd, )
+
 */

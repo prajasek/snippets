@@ -8,7 +8,7 @@
 #include <stdlib.h> 
 
 
-struct addrinfo* getaddr(char* argv) 
+struct addrinfo* getaddr(char* argv, int ai_flags) 
 {
     struct addrinfo             hints; 
     struct addrinfo             *result, *rp; 
@@ -27,11 +27,11 @@ struct addrinfo* getaddr(char* argv)
     
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM; 
-    hints.ai_flags = AI_PASSIVE; 
+    hints.ai_flags = ai_flags; 
     hints.ai_protocol = 0; 
 
 
-    int status = getaddrinfo(input_address, "8080", &hints, &result);
+    int status = getaddrinfo(input_address, "3000", &hints, &result);
     if (status!=0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
         exit(1);
@@ -56,7 +56,7 @@ struct addrinfo* getaddr(char* argv)
         }
 
         inet_ntop(rp->ai_family, addr, ipstr, sizeof ipstr);
-        printf("%s: %s :%s %u\n\n", ipver, ipstr, rp->ai_canonname, ntohs(ip4->sin_port));
+        printf("%s: %s :%s\n\n", ipver, ipstr, rp->ai_canonname );
 
     }
 

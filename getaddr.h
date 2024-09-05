@@ -1,1 +1,1 @@
-struct addrinfo* getaddr(char*) ;
+struct addrinfo* getaddr(char*, int) ;
