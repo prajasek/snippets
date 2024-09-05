@@ -7,13 +7,21 @@
 
 
 int main(int argc, char* argv[]){
-    char* ADDRESS = argv[1];
-    char* PORT = argv[2];
 
-    if (argc < 2) {
-        ADDRESS = NULL; 
+     /* 
+        Usage : ./run_client <address | localhost> <port | 8080>
+        example: ./run_client www.google.com 80
+    */
+
+    char* ADDRESS = NULL; // localhost
+    char* PORT = "8080";
+
+    if (argc > 2) {
+        ADDRESS = argv[1];   
+        PORT = argv[2];      
+    } else {
+        printf("---- Connecting to localhost 8080.....\n\n");
     }
-
     
     printf("Address Input: %s\n", ADDRESS);
     printf("Port/Service input: %s\n", PORT);
@@ -30,6 +38,8 @@ int main(int argc, char* argv[]){
     if (err!=0) {
         fprintf(stderr, "Failed connecting. \nExiting..\n\n");
         exit(1);
+    } else {
+        printf("****** Connection Success! *********** \n\n");
     }
 
 

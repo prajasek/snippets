@@ -6,6 +6,12 @@
 
 
 int main(int argc, char* argv[]){
+
+    /* 
+        Usage : ./run_server <port_number_to_bind> 
+        example: ./run_server 80
+    */
+
     char* PORT = "8080" ;
     if (argc>1) {
         PORT = argv[1];

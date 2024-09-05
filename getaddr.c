@@ -42,13 +42,13 @@ struct addrinfo* getaddr(char* address, char* port, int ai_flags)
         struct sockaddr_in *ip4;
         struct sockaddr_in6* ip6;
         if (rp->ai_family == AF_INET) {
-            printf("AFNET Length: %u\n", rp->ai_addrlen);
+            //printf("AFNET Length: %u\n", rp->ai_addrlen);
             ip4 = (struct sockaddr_in*)rp->ai_addr;
             port4 =  ((struct sockaddr_in*)rp->ai_addr)->sin_port;
             addr = &(ip4->sin_addr);
             ipver = "ipv4";
         } else {  // AF_INET6
-            printf("AF_INET6 Length: %u \n", rp->ai_addrlen);
+            //printf("AF_INET6 Length: %u \n", rp->ai_addrlen);
             ip6 = (struct sockaddr_in6*)rp->ai_addr;
             port6 =  ((struct sockaddr_in6*)rp->ai_addr)->sin6_port;
             addr = &(ip6->sin6_addr);
