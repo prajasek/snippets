@@ -8,16 +8,16 @@
 #include <stdlib.h> 
 
 
-struct addrinfo* getaddr(char* argv, int ai_flags) 
+struct addrinfo* getaddr(char* address, char* port, int ai_flags) 
 {
     struct addrinfo             hints; 
     struct addrinfo             *result, *rp; 
     struct sockaddr_storage     peer_addr; 
     char ipstr[INET6_ADDRSTRLEN];
     char* input_address = NULL;
-    if (argv) 
+    if (address) 
     {
-        char* input_address = argv;
+        char* input_address = address;
     }
 
     
@@ -31,7 +31,7 @@ struct addrinfo* getaddr(char* argv, int ai_flags)
     hints.ai_protocol = 0; 
 
 
-    int status = getaddrinfo(input_address, "3000", &hints, &result);
+    int status = getaddrinfo(input_address, port, &hints, &result);
     if (status!=0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
         exit(1);
@@ -61,12 +61,12 @@ struct addrinfo* getaddr(char* argv, int ai_flags)
     }
 
     return result;
-/* inet_ntop - binary to string IP translation (opposite of inet_pton)
+/* inet_ntop - binary to string IP translation 
     char ip4[INET_ADDRSTRLEN];  // INET6_ADDRSTRLEN for ip6
     struct sockaddr_in sa; 
     sa.sin_addr.s_addr = 3580759050; // "10.12.110.213" from section below 
 
-    inet_ntop(AF_INET, &(sa.sin_addr.s_addr), ip4, INET_ADDRSTRLEN);
+    inet_ntop(AF_INET, &(sa.sin_addr), ip4, INET_ADDRSTRLEN);
     printf("IPv4 address is %s:", ip4 );
     */
 /* inet_pton - ip string to binary
@@ -74,9 +74,9 @@ struct addrinfo* getaddr(char* argv, int ai_flags)
     //struct sockaddr_in* sa = (struct sockaddr_in *) malloc(sizeof(struct sockaddr_in )); 
     struct sockaddr_in sa;
     struct sockaddr_in6 sa6; 
-    // memset(&sa, 0, sizeof (struct sockaddr_in));
+    //memset(&sa, 0, sizeof (struct sockaddr_in));
 
-    inet_pton(AF_INET, "10.12.110.213", &(sa.sin_addr));
+    inet_pton(AF_INET, "10.12.110.213", &(sa.sin_addr)); // 3580759050 from above
     inet_pton(AF_INET6, "ffff:eeee:ffff::", &(sa6.sin6_addr));
     printf("-- %u\n", sa.sin_addr.s_addr);
     for (uint8_t x=0; x<16; x++) {
