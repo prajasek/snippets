@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Learn C debugger",
+            "name": "RunServer-WithArgs",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/server_sample",
@@ -12,10 +12,10 @@
             "cwd": "${workspaceFolder}"
         },
         {
-            "name": "Learn C no args",
+            "name": "RunServer-NoArgs",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/main",
+            "program": "${workspaceFolder}/server_sample",
             "args": [],
             "cwd": "${workspaceFolder}"
         },
