@@ -2,6 +2,7 @@
 #include <sys/socket.h>
 #include <stdio.h>
 #include <string.h>
+#include <arpa/inet.h>   // inet_pton
 #include <netdb.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -53,8 +54,14 @@ int main(int argc, char* argv[]){
         newfd = accept(sockfd, (struct sockaddr*)&peer_address, &addr_size);
         FILE* file = fopen("output.txt", "w");
 
-        printf("New connection : %u\n", ((struct sockaddr_in*)&peer_address)->sin_addr.s_addr);
+        char ip_src[INET_ADDRSTRLEN];
+        struct in_addr* src_in_addr = &(((struct sockaddr_in*)&peer_address)->sin_addr);
+
+        inet_ntop(AF_INET, src_in_addr, ip_src, INET_ADDRSTRLEN);
+
+        printf("New connection : %s\n", ip_src);
         printf("New fd: %d\n", newfd);
+        
         char msg_buffer[1000]; 
         int x1; 
 
@@ -63,6 +70,12 @@ int main(int argc, char* argv[]){
             printf("Bytes Received -- %d\n", x1 );
             printf("Message received : %s\n", msg_buffer);
             fputs(msg_buffer, file);
+            // Sending back message:
+
+            send(newfd, msg_buffer, 300, 0);
+            char buff[300];
+            strncpy(buff, msg_buffer, 300 );
+            printf("Sending : %s\n", buff  );
             memset(msg_buffer, 0, 1000);
         }
         fclose(file);

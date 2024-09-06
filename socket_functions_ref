@@ -7,6 +7,20 @@
 #include <stdlib.h> 
 
 /*
+SERVER - SEQUENCE OF CALLS:  
+    - getaddrinfo()
+    - socket()
+    - bind()
+    - listen()
+    - accept()
+    - recv()
+
+CLIENT - SEQUENCE OF CALLS:
+    - getaddrinfo()
+    - socket()
+    - connect()
+    - send()
+
 int getaddrinfo(node, service/port, struct addrinfo* hints, 
                                     struct addrinfo** result_linkedlist);
     - node - hostname or IP
@@ -29,13 +43,7 @@ int accept(int sockfd, struct sockaddr* addr, socklen_t* addrlen);
     - addr - address of peer socket
     - addrlen - initial - size of addr, then on return filled in with actual size
 
-SEQUENCE OF CALLS:  
-    - getaddrinfo()
-    - socket()
-    - bind()
-    - listen()
-    - accept()
-
+int send(int sockfd, void* msg, int len, int flags);
 
 
 
