@@ -8,6 +8,7 @@
 #include <stdlib.h> 
 
 
+
 struct addrinfo* getaddr(char* address, char* port, int ai_flags) 
 {
     struct addrinfo             hints; 
@@ -20,11 +21,11 @@ struct addrinfo* getaddr(char* address, char* port, int ai_flags)
         input_address = address;
     }
 
-    printf("Getting addrinfo for : %s\n\n", input_address);
+    printf("Getting addrinfo for: %s \nPort: %s\n\n", input_address, port);
 
     memset(&hints, 0, sizeof hints);
     
-    hints.ai_family = AF_UNSPEC;
+    hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM; 
     hints.ai_flags = ai_flags; 
     hints.ai_protocol = 0; 

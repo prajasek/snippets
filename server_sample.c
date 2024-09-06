@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <netdb.h>
 #include "getaddr.h"
-
+#include <unistd.h>
+#include <errno.h>  //int errno  -- global variable
 
 int main(int argc, char* argv[]){
 
@@ -11,24 +12,37 @@ int main(int argc, char* argv[]){
         Usage : ./run_server <port_number_to_bind> 
         example: ./run_server 80
     */
-
+    struct sockaddr_storage* peer_address;
     char* PORT = "8080" ;
+    int sockfd; 
+    int newfd;
+    int server_or_client = AI_PASSIVE; //AI_PASSIVE - server;  0 - client
+
     if (argc>1) {
         PORT = argv[1];
+        printf("porting : %s", PORT);
     }
-    printf("Port  : %s\n", PORT);
-    int server_or_client = AI_PASSIVE; //AI_PASSIVE - server;  0 - client
-    struct addrinfo* result = getaddr(NULL, PORT, server_or_client );
-    int sockfd; 
+    printf("Port: <%s>\n", PORT);
 
+    struct addrinfo* result = getaddr(NULL, PORT, server_or_client );
     sockfd = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+    if ()
     if (argc < 2 && server_or_client == AI_PASSIVE) {
         bind(sockfd, result->ai_addr, result->ai_addrlen);
     }
+    
+    listen(sockfd, 10);
+    
+    printf("CHECK PORT NUMBER: %hu\n", ntohs(((struct sockaddr_in*)result->ai_addr)->sin_port));
+
+    socklen_t addr_size = sizeof peer_address;
+    newfd = accept(sockfd, (struct sockaddr*)&peer_address, &addr_size);
+    printf("Newfd: %d\n", newfd);
+    printf("New connection : %u\n", ((struct sockaddr_in*)&peer_address)->sin_addr.s_addr);
 
     freeaddrinfo(result);
-    
-
+    printf("Closing...\n");
+    close(sockfd);
     
 }
 

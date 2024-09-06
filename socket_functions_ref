@@ -9,17 +9,34 @@
 /*
 int getaddrinfo(node, service/port, struct addrinfo* hints, 
                                     struct addrinfo** result_linkedlist);
-- node - hostname or IP
-- service - port number, service name like http, ftp (found in /etc/services)
-- hints - filled out to hint whats needed
-- result_linkedlist - linked list of all addresses
-
+    - node - hostname or IP
+    - service - port number, service name like http, ftp (found in /etc/services)
+    - hints - filled out to hint whats needed
+    - result_linkedlist - linked list of all addresses
 
 int socket(int domain, int type, int protocol);
-- domain - AF_UNIX, AF_INET, AF_INET6
-- type   - SOCK_STREAM, SOCK_DGRAM 
-- protocol - SCTP, etc. --- always 0
+    - domain - AF_UNIX, AF_INET, AF_INET6
+    - type   - SOCK_STREAM, SOCK_DGRAM 
+    - protocol - SCTP, etc. --- always 0
 
-int bind(int sockfd, )
+int bind(int sockfd, struct sockaddr* addr, addrlen );    // server
+int connect(int sockfd, struct sockaddr* addr, addrlen);  // client 
+int listen(int sockfd, int backlog)
+    - sockfd -  socket that is bound to a port 
+    - backlog - max number of *pending* connections in the accept queue
+
+int accept(int sockfd, struct sockaddr* addr, socklen_t* addrlen);
+    - addr - address of peer socket
+    - addrlen - initial - size of addr, then on return filled in with actual size
+
+SEQUENCE OF CALLS:  
+    - getaddrinfo()
+    - socket()
+    - bind()
+    - listen()
+    - accept()
+
+
+
 
 */

@@ -5,9 +5,9 @@
             "name": "Learn C debugger",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/main",
+            "program": "${workspaceFolder}/server_sample",
             "args": [
-                "www.google.com"
+                "8080"
             ],
             "cwd": "${workspaceFolder}"
         },

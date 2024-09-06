@@ -1,4 +1,4 @@
 #!/bin/sh
 clear
-gcc -o main server_sample.c getaddr.c
-./main $1 $2
+gcc -o server server_sample.c getaddr.c
+./server $1 

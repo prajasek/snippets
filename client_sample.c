@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <netdb.h>
+#include <errno.h>  //int errno  -- global variable
 #include "getaddr.h"
 
 
@@ -37,15 +38,17 @@ int main(int argc, char* argv[]){
 
     if (err!=0) {
         fprintf(stderr, "Failed connecting. \nExiting..\n\n");
+        printf("Error code: %d\n", errno);
         exit(1);
     } else {
-        printf("****** Connection Success! *********** \n\n");
+        printf("****** Connection Success! ********* \n\n");
     }
 
 
 
     freeaddrinfo(result);
     
+
 }
 
 /* OLD WAY OF PACKING SOCKADDR_IN FOR BINDING. USE getaddrinfo()
