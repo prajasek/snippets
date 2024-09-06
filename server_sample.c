@@ -5,6 +5,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <errno.h>  //int errno  -- global variable
 #include "getaddr.h"
 
@@ -15,7 +16,7 @@ int main(int argc, char* argv[]){
         example: ./run_server 80
     */
     struct sockaddr_storage* peer_address;
-    char* PORT =  "8123" ;
+    char* PORT =  "8080" ;
     int sockfd; 
     int newfd;
     int server_or_client = AI_PASSIVE; //AI_PASSIVE - server;  0 - client
@@ -29,6 +30,7 @@ int main(int argc, char* argv[]){
     struct addrinfo* result = getaddr(NULL, PORT, server_or_client );
     sockfd = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
     printf("Socket Created : %d ", sockfd );
+
     // set socket option
     if (setsockopt(sockfd, SOL_SOCKET,SO_REUSEADDR, &yes, sizeof yes) == -1) {
         printf("Error Sockopt");
@@ -39,18 +41,40 @@ int main(int argc, char* argv[]){
         bind(sockfd, result->ai_addr, result->ai_addrlen);
     }
     
-    listen(sockfd, 10);
-    short int rrr = ntohs(((struct sockaddr_in*)result->ai_addr)->sin_port);
-    printf("\nCHECK PORT NUMBER: %hu\n", ntohs(((struct sockaddr_in*)result->ai_addr)->sin_port));
+    listen(sockfd, 1);
+
+    printf("\nWaiting for connection at port : %hu\n", ntohs(((struct sockaddr_in*)result->ai_addr)->sin_port));
 
     socklen_t addr_size = sizeof peer_address;
-    newfd = accept(sockfd, (struct sockaddr*)&peer_address, &addr_size);
-    printf("Newfd: %d %d\n", newfd, rrr);
-    printf("New connection : %u\n", ((struct sockaddr_in*)&peer_address)->sin_addr.s_addr);
 
-    freeaddrinfo(result);
+
+    while (true) {
+        printf("\nWaiting...\n");
+        newfd = accept(sockfd, (struct sockaddr*)&peer_address, &addr_size);
+        FILE* file = fopen("output.txt", "w");
+
+        printf("New connection : %u\n", ((struct sockaddr_in*)&peer_address)->sin_addr.s_addr);
+        printf("New fd: %d\n", newfd);
+        char msg_buffer[1000]; 
+        int x1; 
+
+        // the 
+        while ((x1=recv(newfd, msg_buffer, 1000, 0)) > 0) {
+            printf("Bytes Received -- %d\n", x1 );
+            printf("Message received : %s\n", msg_buffer);
+            fputs(msg_buffer, file);
+            memset(msg_buffer, 0, 1000);
+        }
+        fclose(file);
+
+
+    
+    }
+    
+
+//    freeaddrinfo(result);
     printf("Closing...\n");
-    close(sockfd);
+
     
 }
 

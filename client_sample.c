@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <netdb.h>
+#include<unistd.h>
+#include <string.h>
 #include <errno.h>  //int errno  -- global variable
 #include "getaddr.h"
 
@@ -40,14 +42,30 @@ int main(int argc, char* argv[]){
         fprintf(stderr, "Failed connecting. \nExiting..\n\n");
         printf("Error code: %d\n", errno);
         exit(1);
-    } else {
-        printf("****** Connection Success! ********* \n\n");
     }
+    
+    printf("****** Connection Success! ********* \n\n");
+    /*
+        Read some values from the input file and send it over. 
+    */
 
-
+    char line[100]; 
+    int len, bytes_sent;
+    FILE* file = fopen("input.txt","r");
+    while (!feof(file)){
+        memset(line, 0, 100);
+        printf("Before : %s\n", line);
+        fgets(line, 100, file);
+        sleep(1);
+        printf("After: %zu %s\n", strlen(line), line);
+        len = strlen(line);
+        bytes_sent = send(sockfd, line, len, 0);
+    }
+    fclose(file);
 
     freeaddrinfo(result);
     
+    printf("\nClosing connection....\n");
 
 }
 
