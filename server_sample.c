@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
         example: ./run_server 80
     */
     struct sockaddr_storage* peer_address;
-    char* PORT =  "8080" ;
+    char* PORT =  "8123" ;
     int sockfd; 
     int newfd;
     int server_or_client = AI_PASSIVE; //AI_PASSIVE - server;  0 - client
@@ -41,7 +41,7 @@ int main(int argc, char* argv[]){
     
     listen(sockfd, 10);
     short int rrr = ntohs(((struct sockaddr_in*)result->ai_addr)->sin_port);
-    printf("CHECK PORT NUMBER: %hu\n", ntohs(((struct sockaddr_in*)result->ai_addr)->sin_port));
+    printf("\nCHECK PORT NUMBER: %hu\n", ntohs(((struct sockaddr_in*)result->ai_addr)->sin_port));
 
     socklen_t addr_size = sizeof peer_address;
     newfd = accept(sockfd, (struct sockaddr*)&peer_address, &addr_size);

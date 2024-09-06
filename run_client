@@ -1,4 +1,4 @@
 #!/bin/sh
 clear
 gcc -o client_sample client_sample.c getaddr.c
-./client $1 $2
+./client_sample $1 $2

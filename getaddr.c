@@ -9,7 +9,7 @@
 
 
 
-struct addrinfo* getaddr(char* address, char* port, int ai_flags) 
+struct addrinfo* getaddr(char* address, char* PORT, int ai_flags) 
 {
     struct addrinfo             hints; 
     struct addrinfo             *result, *rp; 
@@ -21,7 +21,7 @@ struct addrinfo* getaddr(char* address, char* port, int ai_flags)
         input_address = address;
     }
 
-    printf("Getting addrinfo for: %s \nPort: %s\n\n", input_address, port);
+    printf("Getting addrinfo for: %s \nPort: %s\n\n ", input_address, PORT);
 
     memset(&hints, 0, sizeof hints);
     
@@ -30,7 +30,7 @@ struct addrinfo* getaddr(char* address, char* port, int ai_flags)
     hints.ai_flags = ai_flags; 
     hints.ai_protocol = 0; 
 
-    int status = getaddrinfo(input_address, port, &hints, &result);
+    int status = getaddrinfo(input_address, PORT, &hints, &result);
     if (status!=0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
         exit(1);

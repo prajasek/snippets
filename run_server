@@ -1,4 +1,4 @@
 #!/bin/sh
 clear
 gcc -o server_sample server_sample.c getaddr.c
-./server $1 
+./server_sample $1 
