@@ -48,6 +48,7 @@ int main(int argc, char* argv[]){
 
     socklen_t addr_size = sizeof peer_address;
 
+    FILE* infile = fopen("input.txt", "r");
 
     while (true) {
         printf("\nWaiting...\n");
@@ -65,19 +66,30 @@ int main(int argc, char* argv[]){
         char msg_buffer[1000]; 
         int x1; 
 
-        // the 
+        fseek(infile,0, SEEK_SET);
+       
         while ((x1=recv(newfd, msg_buffer, 1000, 0)) > 0) {
             printf("Bytes Received -- %d\n", x1 );
             printf("Message received : %s\n", msg_buffer);
             fputs(msg_buffer, file);
             // Sending back message:
+            char* read_query = "getfile";
+            if (strcmp(read_query, msg_buffer)==0) {
+                fseek(infile,0, SEEK_SET);
+            }
 
-            send(newfd, msg_buffer, 300, 0);
-            char buff[300];
-            strncpy(buff, msg_buffer, 300 );
-            printf("Sending : %s\n", buff  );
             memset(msg_buffer, 0, 1000);
+            char file_msg[1000];
+            char* delimiter = "----------xyzEOF";
+            while (!feof(infile)){
+                fgets(file_msg, 1000, infile);
+                printf("Sending : %s\n", file_msg);
+                send(newfd, file_msg, strlen(file_msg), 0);
+            } 
+            send(newfd, delimiter, strlen(delimiter), 0);
+            printf("x1 : %d\n", x1);
         }
+        printf("Exiting : %d", x1);
         fclose(file);
 
 
