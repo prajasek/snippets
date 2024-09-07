@@ -29,6 +29,7 @@ while (True):
     if EOF: 
         file = open("output.txt", 'ab')
         file.write(data)
+        file.write(b"\n------------------------------------------------------\n")
         file.close()
         break
 

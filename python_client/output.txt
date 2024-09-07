@@ -1,0 +1,16 @@
+Pypsum is available only for Linux, at the moment. 
+On Linux, you will need python (I have 2.5.2, might work with other versions, too) 
+with the following modules: urllib2, 
+xml.sax (for the command line tool), gtk, gtk.glade (for the graphical interface). 
+Most modern Linux distributions (like Ubuntu) have these ready installed.
+You can get Pypsum from the Downloads tab, or, if you prefer, the Source tab. 
+
+------------------------------------------------------
+Pypsum is available only for Linux, at the moment. 
+On Linux, you will need python (I have 2.5.2, might work with other versions, too) 
+with the following modules: urllib2, 
+xml.sax (for the command line tool), gtk, gtk.glade (for the graphical interface). 
+Most modern Linux distributions (like Ubuntu) have these ready installed.
+You can get Pypsum from the Downloads tab, or, if you prefer, the Source tab. 
+
+------------------------------------------------------
