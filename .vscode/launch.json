@@ -20,6 +20,14 @@
             "cwd": "${workspaceFolder}"
         },
         {
+            "name": "TabulationsC",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/seminar/assignment3",
+            "args": ["hello", "xxsf", "erterte"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
             "name": "C/C++: gcc build and debug active file",
             "type": "cppdbg",
             "request": "launch",
