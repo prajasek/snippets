@@ -6,7 +6,7 @@
 #define WORDSIZE 50
 
 /* Split string based on the delimiter provide 
-   as command line arguments */
+ * as command line arguments */
 int main(int argc, char* argv[]) {
     char* DELIMITER = " ";
     char* str = "This is a test string. Please enter string and delimiter in the command line.";
@@ -18,6 +18,11 @@ int main(int argc, char* argv[]) {
     printf("\nString: %s\n", str);
     printf("Delimiter: %s\n\n", DELIMITER);
 
+    /* @counter - index of each character in a token/word
+     * @counter_tokens - index of each token/word in list of tokens/words 
+     * @token  - single token/word 
+     * @tokens - list of tokens/words being collected
+     */
     int counter=0, counter_tokens =0;
     char* tokens[TOKENS];
     char token[WORDSIZE]; 
@@ -25,8 +30,7 @@ int main(int argc, char* argv[]) {
     memset(token, '\0', WORDSIZE);
 
     for (char* s=str;; s++){
-        if (*s == *DELIMITER || *s=='\0'){
-
+        if (*s == *DELIMITER || *s=='\0') {
             /* empty string between delimiters OR delimiter at beginning or end. */
             if (token[0]!='\0') {               
                 tokens[counter_tokens] = (char*) malloc(WORDSIZE*sizeof(char));
@@ -40,7 +44,7 @@ int main(int argc, char* argv[]) {
             }
             memset(token, '\0', WORDSIZE);
             counter=0;
-        }
+        } 
         else {
             /* keep adding characters to form a token/word */
             token[counter++]=*s;
@@ -53,7 +57,7 @@ int main(int argc, char* argv[]) {
         last_token = tokens[i++];
     }
 
-    /* Display all tokens */
+    /* Display all tokens/words */
     printf("Number of words: %d\n", counter_tokens);
     printf("Words:           [ ");
     for (int i=0;; i++){
@@ -62,8 +66,7 @@ int main(int argc, char* argv[]) {
             break;
         }
         /* Just for display purposes: 
-         * No comma at the start before elements 
-         */
+         * No comma at the start before elements */
         if (i) printf(", ");      
         printf("'%s'", tokens[i]);
     }
@@ -75,7 +78,7 @@ int main(int argc, char* argv[]) {
      * while (*word != NULL) {
      *   printf("TOKEN :%s\n", *word);
      *   word++;
-     * }
+     * } 
      */
 
     /* Done. Clean-up */
