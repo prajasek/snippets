@@ -29,11 +29,9 @@ int main(int argc, char* argv[]) {
     memset(tokens, 0, TOKENS);
     memset(token, '\0', WORDSIZE);
 
-    /* Split tokens/words based on DELIMITER into each 
-     * @token and store them into @tokens.
-     * This ignores empty string between consecutive 
-     * delimiters placed next to each other, and between 
-     * delimiter and end of string
+    /* Split tokens/words based on DELIMITER into each @token and store them into @tokens.
+     * This ignores empty string between consecutive delimiters placed next to each other, 
+     * and between delimiter and end of string
      */
     for (char* s=str;; s++){
         if (*s == *DELIMITER || *s=='\0') {
