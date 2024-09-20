@@ -1,0 +1,9 @@
+#! /bin/bash
+gcc -o string_split string_split.c 
+echo "Test Case:"
+echo "-----------"
+./string_split "GETFILE FILE C:\\path\\to\\file" " "
+
+echo "Main:"
+echo "------"
+./string_split "$1" "$2"

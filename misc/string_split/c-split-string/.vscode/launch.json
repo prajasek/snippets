@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "testing string split 1",
+            "type": "cppdbg",
+            "request" : "launch",
+            "program" : "${workspaceFolder}/string_split",
+            "args" : ["C:\\\\this\\\\is\\\\a\\\\test\\\\tose\\\\filename.txt", "\\"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "testing string split 2",
+            "type": "cppdbg",
+            "request" : "launch",
+            "program" : "${workspaceFolder}/string_split",
+            "args" : ["/usr/bin/home/file.txt", "/"],
+            "cwd": "${workspaceFolder}"
+        } 
+    ]
+}
