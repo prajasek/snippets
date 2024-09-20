@@ -67,12 +67,14 @@ int main(int argc, char* argv[]){
         int x1; 
 
         fseek(infile,0, SEEK_SET);
-       
+        memset(msg_buffer, 1000, 0);
         while ((x1=recv(newfd, msg_buffer, 1000, 0)) > 0) {
             printf("Bytes Received -- %d\n", x1 );
             printf("Message received : %s\n", msg_buffer);
-            fputs(msg_buffer, file);
+            fwrite(msg_buffer, 1, 1000, file);
+            //fputs(msg_buffer, file);
             // Sending back message:
+            printf("after fwrite");
             char* read_query = "getfile";
             if (strcmp(read_query, msg_buffer)==0) {
                 fseek(infile,0, SEEK_SET);
@@ -91,9 +93,7 @@ int main(int argc, char* argv[]){
         }
         printf("Exiting : %d", x1);
         fclose(file);
-
-
-    
+        close(newfd);
     }
     
 

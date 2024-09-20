@@ -2,6 +2,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "RunServer-WithArgs-a4",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/seminar/assignment4/a4",
+            "args": [
+                "10000000"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
             "name": "RunServer-WithArgs",
             "type": "cppdbg",
             "request": "launch",
@@ -24,11 +34,15 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/seminar/assignment3",
-            "args": ["hello", "xxsf", "erterte"],
+            "args": [
+                "hello",
+                "xxsf",
+                "erterte"
+            ],
             "cwd": "${workspaceFolder}"
         },
         {
-            "name": "C/C++: gcc build and debug active file",
+            "name": "C1/C++: gcc build and debug active file",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
@@ -52,6 +66,32 @@
             ],
             "preLaunchTask": "C/C++: gcc build active file",
             "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "C/C++: gcc build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "/usr/bin",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "A4 C/C++: gcc build active file"
         }
     ]
 }

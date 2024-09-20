@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <string.h>
 
-
 int main(uint8_t argc, char** argv) {
     unsigned char word[128];            // we know each word length < 128
     uint8_t code = 97;                  // lower-case 97-122
