@@ -85,31 +85,51 @@ void check_stack(uint8_t op, uint8_t code) {
         case ROTL:
             printf("Error at ROTx. Not enough elements. Exiting. \n");
             exit(code);
-            break;
+        case LPAR: 
+        case RPAR: 
+            printf("Syntax Error. Right parenthesis missing. \n");
+            exit(code);
     }
 }
 
-int loop_expression(file) {
+int loop_expression(char** expr, int loc) {
+    char* expression = *expr; 
+    expression = expression + loc;
+    int len = strlen(expression);
+
+    char* loop_expr = (char*) malloc (len*sizeof(char));
+    memset(loop_expr, 0, len);
+    
+    char c; 
+    int i=0; 
+    while (*expression != EOF || *expression != '\0') {
+        c = *(expression++);
+        loop_expr[i++] = c; 
+        if (c == RPAR) break; 
+    }
+    if (loop_expr[--i] != RPAR) {
+        check_stack(LPAR, SYN_ERROR);
+    }
+            loop_expr[--i] = 0; 
+        evaluate(loop_expr);
+}
+
+char* read_file(FILE* file) {
     char expression[STACK_SIZE];
     char c; 
     memset(expression, 0, STACK_SIZE);
-    for (int i=0; i<STACK_SIZE; i++) {
-        c = fgetc(file);
-        if (c == EOF) break;
-        expression[i] = c; 
-        if (c == RPAR) break; 
+    int i=0; 
+    while (!feof(file)) {
+        expression[i++] = fgetc(file);
     }
-    if (expression[0]=='\0') return -1;
-    return 1; 
+    return expression; 
 }
 
-
-int main(int argc, char* argv[]) {
-    char* filename = argv[1];
-    FILE* file = fopen(filename, "r");
+void evaluate(char* expression) {
+    int i = 0 ; 
     char c; 
     int temp; 
-    while ((c = fgetc(file))!=EOF) {
+    while ((c = expression[i++])!=EOF) {
         switch (c) {
             case ZERO:
                 if (!n_elements) {
@@ -174,10 +194,17 @@ int main(int argc, char* argv[]) {
                 print_stack();
                 break;     
             case LPAR: 
-                loop_expression(file);
+                loop_expression(&expression, i);
 
         }
     }
+}
+
+int main(int argc, char* argv[]) {
+    char* filename = argv[1];
+    FILE* file = fopen(filename, "r");
+    char* expression = read_file(file);
+    
 
 
 
