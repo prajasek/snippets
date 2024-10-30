@@ -8,6 +8,12 @@
 #define RW_OWNER S_IRWXU
 #define RW_GROUP S_IRWXG
 
+typedef struct message {
+    char message[100]; 
+    char name[100];
+} MSG;
+
+
 int main() {
 
     mqd_t mqdes; 
@@ -28,7 +34,9 @@ int main() {
         printf("Something failed.\n");
     }
     else {
-        printf("Message: %s\n", msg);
+        MSG* m = (MSG*)msg; 
+        printf("Message: %s\n", m->message);
+        printf("Name: %s\n", m->name);
         printf("Priority: %d\n", priority);
     }
 
