@@ -9,10 +9,13 @@
 #define RW_GROUP S_IRWXG
 
 typedef struct message {
-    char message[100]; 
+    char message[100];  
     char name[100];
 } MSG;
 
+void printer(int i) {
+    printf("%d", i);
+}
 
 int main() {
 
@@ -30,15 +33,29 @@ int main() {
 
     int priority = 0; 
 
-    if (mq_receive (mqdes, msg, attr.mq_msgsize, &priority) == -1) {
-        printf("Something failed.\n");
-    }
-    else {
-        MSG* m = (MSG*)msg; 
-        printf("Message: %s\n", m->message);
-        printf("Name: %s\n", m->name);
-        printf("Priority: %d\n", priority);
+    while (1) {
+        if (mq_receive (mqdes, msg, attr.mq_msgsize, &priority) == -1) {
+            printf("Something failed.\n");
+            break;
+        }
+        else {
+            MSG* m = (MSG*)msg; 
+            printf("Message: %s\n", m->message);
+            printf("Name: %s\n", m->name);
+            printf("Priority: %d\n", priority);
+
+            if (strcmp(m->message, "----EOF----") ==0 && strcmp(m->name, "----FOE----") == 0) {
+                printf("End of message reached. \n");
+                break;
+            }
+        }
     }
 
+    printf("All messages retrieved.\n");
+    mq_close(mqdes);
+    mq_unlink(QNAME);
 
+    for (int i=0; i<1000; i++) {
+        printer(i);
+    }
 }

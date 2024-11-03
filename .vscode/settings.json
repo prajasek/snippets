@@ -3,6 +3,10 @@
         "unistd.h": "c",
         "sstream": "c",
         "random": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "system_error": "c",
+        "typeinfo": "c",
+        "stat.h": "c",
+        "pthread.h": "c"
     }
 }
